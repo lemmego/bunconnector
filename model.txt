@@ -1,0 +1,9 @@
+package {{.PackageName}}
+
+type {{.ModelName | toCamel}} struct {
+{{- range .Fields}}
+    {{.Name | toCamel}} {{.Type}} `json:"{{.Name | toSnake}}" bun:"{{.Name | toSnake}}{{if .Primary}},pk,autoincrement{{end}}{{if .Required}},notnull{{end}}{{if .Unique}},unique{{end}}"`
+{{- end}}
+}
+
+{{.Appendable}}

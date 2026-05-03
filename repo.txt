@@ -1,0 +1,23 @@
+package {{.PackageName}}
+
+import (
+	"github.com/lemmego/gpa"
+	"github.com/lemmego/gpabun"
+	"{{.ModuleName}}/internal/models"
+)
+
+// {{.Name | toCamel}}Repository provides {{.Name | toSnake}}-specific database operations
+type {{.Name | toCamel}}Repository struct {
+	gpa.Repository[models.{{.Name | toCamel}}]
+}
+
+// {{.Name | toCamel}} returns a {{.Name | toCamel}}Repository instance
+func {{.Name | toCamel}}(instanceName ...string) *{{.Name | toCamel}}Repository {
+	repo := gpabun.GetRepositoryFromRegistry[models.{{.Name | toCamel}}](instanceName...)
+	return &{{.Name | toCamel}}Repository{Repository: repo}
+}
+
+// Custom methods specific to {{.Name | toCamel}} operations
+// Add your custom repository methods here
+
+{{.Appendable}}
