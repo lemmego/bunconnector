@@ -128,10 +128,3 @@ require (
 	modernc.org/memory v1.11.0 // indirect
 	modernc.org/sqlite v1.46.1 // indirect
 )
-
-replace (
-	github.com/lemmego/api => ../api
-	github.com/lemmego/cli => ../cli
-	github.com/lemmego/gpa => ../gpa
-	github.com/lemmego/gpabun => ../gpabun
-)
