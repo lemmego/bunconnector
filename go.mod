@@ -1,6 +1,6 @@
 module github.com/lemmego/bunconnector
 
-go 1.25.0
+go 1.27
 
 require (
 	github.com/charmbracelet/huh v1.0.0
@@ -16,7 +16,6 @@ require (
 	github.com/uptrace/bun/dialect/pgdialect v1.2.18
 	github.com/uptrace/bun/dialect/sqlitedialect v1.2.18
 	github.com/uptrace/bun/driver/pgdriver v1.2.18
-	github.com/uptrace/bun/driver/sqliteshim v1.2.18
 )
 
 require (

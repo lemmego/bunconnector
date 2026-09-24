@@ -16,7 +16,6 @@ import (
 	"github.com/uptrace/bun/dialect/pgdialect"
 	"github.com/uptrace/bun/dialect/sqlitedialect"
 	"github.com/uptrace/bun/driver/pgdriver"
-	"github.com/uptrace/bun/driver/sqliteshim"
 )
 
 type Provider struct {
@@ -140,9 +139,9 @@ func openMySQL(config gpa.Config) (*sql.DB, error) {
 
 func openSQLite(config gpa.Config) (*sql.DB, error) {
 	if config.ConnectionURL != "" {
-		return sql.Open(sqliteshim.ShimName, config.ConnectionURL)
+		return sql.Open("sqlite", config.ConnectionURL)
 	}
-	return sql.Open(sqliteshim.ShimName, config.Database)
+	return sql.Open("sqlite", config.Database)
 }
 
 func sqlConfig(connName ...string) gpa.Config {

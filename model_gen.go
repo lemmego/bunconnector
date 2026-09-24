@@ -45,8 +45,8 @@ var CommonModelFields = []*ModelField{
 		Required: true,
 	},
 	{
-		Name:     "deleted_at",
-		Type:     "time.Time",
+		Name: "deleted_at",
+		Type: "time.Time",
 	},
 }
 
@@ -89,8 +89,7 @@ func (mg *ModelGenerator) GetStub() string {
 	return modelStub
 }
 
-func (mg *ModelGenerator) Generate(appendable ...[]byte) error {
-	fs := fsys.NewLocalStorage("")
+func (mg *ModelGenerator) render(appendable ...[]byte) (string, error) {
 	parts := strings.Split(mg.GetPackagePath(), "/")
 	packageName := mg.GetPackagePath()
 
@@ -102,13 +101,29 @@ func (mg *ModelGenerator) Generate(appendable ...[]byte) error {
 		"PackageName": packageName,
 		"ModelName":   mg.name,
 		"Fields":      mg.fields,
+		"Appendable":  "",
+		"UsesTime":    modelUsesTime(mg.fields),
 	}
 
 	if len(appendable) > 0 {
 		tmplData["Appendable"] = string(appendable[0])
 	}
 
-	output, err := cli.ParseTemplate(tmplData, mg.GetStub(), cli.CommonFuncs)
+	return cli.ParseTemplate(tmplData, mg.GetStub(), cli.CommonFuncs)
+}
+
+func modelUsesTime(fields []*ModelField) bool {
+	for _, field := range fields {
+		if field != nil && field.Type == "time.Time" {
+			return true
+		}
+	}
+	return false
+}
+
+func (mg *ModelGenerator) Generate(appendable ...[]byte) error {
+	fs := fsys.NewLocalStorage("")
+	output, err := mg.render(appendable...)
 
 	if err != nil {
 		return err

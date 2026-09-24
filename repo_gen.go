@@ -35,8 +35,7 @@ func (rg *RepoGenerator) GetStub() string {
 	return repoStub
 }
 
-func (rg *RepoGenerator) Generate(appendable ...[]byte) error {
-	fs := fsys.NewLocalStorage("")
+func (rg *RepoGenerator) render(moduleName string, appendable ...[]byte) (string, error) {
 	parts := strings.Split(rg.GetPackagePath(), "/")
 	packageName := rg.GetPackagePath()
 
@@ -44,22 +43,28 @@ func (rg *RepoGenerator) Generate(appendable ...[]byte) error {
 		packageName = parts[len(parts)-1]
 	}
 
-	modName, err := cli.GetModuleName()
-	if err != nil {
-		return err
-	}
-
 	tmplData := map[string]interface{}{
 		"PackageName": packageName,
 		"Name":        rg.name,
-		"ModuleName":  modName,
+		"ModuleName":  moduleName,
+		"Appendable":  "",
 	}
 
 	if len(appendable) > 0 {
 		tmplData["Appendable"] = string(appendable[0])
 	}
 
-	output, err := cli.ParseTemplate(tmplData, rg.GetStub(), cli.CommonFuncs)
+	return cli.ParseTemplate(tmplData, rg.GetStub(), cli.CommonFuncs)
+}
+
+func (rg *RepoGenerator) Generate(appendable ...[]byte) error {
+	fs := fsys.NewLocalStorage("")
+	modName, err := cli.GetModuleName()
+	if err != nil {
+		return err
+	}
+
+	output, err := rg.render(modName, appendable...)
 	if err != nil {
 		return err
 	}
