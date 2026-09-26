@@ -9,6 +9,7 @@ import (
 	"github.com/go-sql-driver/mysql"
 	"github.com/lemmego/api/app"
 	"github.com/lemmego/api/config"
+	"github.com/lemmego/api/db"
 	"github.com/lemmego/gpa"
 	"github.com/lemmego/gpabun"
 	"github.com/uptrace/bun"
@@ -23,6 +24,8 @@ type Provider struct {
 	config    gpa.Config
 	appConfig config.Configuration
 	sqlDB     *sql.DB
+	connName  string
+	dialect   db.Dialect
 }
 
 func (b *Provider) WithGPAConfig(config gpa.Config) *Provider {
@@ -37,13 +40,21 @@ func (b *Provider) AddCommands() []app.Command {
 	}
 }
 
-func (b *Provider) GetSQLDb() *sql.DB {
+// SQLDB returns the underlying connection. It is half of db.Connection, and
+// is spelled the same way in every connector so the seam has one name.
+func (b *Provider) SQLDB() *sql.DB {
 	return b.sqlDB
 }
 
+// Dialect reports the SQL flavour of the open connection.
+func (b *Provider) Dialect() db.Dialect { return b.dialect }
+
+// Name reports which sql.connections key this connection was built from.
+func (b *Provider) Name() string { return b.connName }
+
 func (b *Provider) Provide(a app.App) error {
 	b.appConfig = a.Config()
-	dbConfig := sqlConfig()
+	dbConfig, connName := sqlConfig()
 	if b.config.Host != "" {
 		dbConfig = b.config
 	}
@@ -57,14 +68,22 @@ func (b *Provider) Provide(a app.App) error {
 		gpa.RegisterDefault(provider)
 		a.AddService(provider)
 	} else {
-		db, err := NewBunConnection(dbConfig)
+		bunDB, err := NewBunConnection(dbConfig)
 		if err != nil {
 			panic(err)
 		}
-		b.sqlDB = db.DB
-		a.AddService(db)
+		b.sqlDB = bunDB.DB
+		a.AddService(bunDB)
 	}
 
+	b.connName = connName
+	b.dialect, _ = db.ParseDialect(dbConfig.Driver)
+
+	// Outside the branch above on purpose. The two arms register mutually
+	// exclusive products — a *gpabun.Provider or a *bun.DB — so before the
+	// seam existed there was no type a framework package could ask for that
+	// was present in both modes.
+	db.Register(a, b)
 	return nil
 }
 
@@ -144,7 +163,10 @@ func openSQLite(config gpa.Config) (*sql.DB, error) {
 	return sql.Open("sqlite", config.Database)
 }
 
-func sqlConfig(connName ...string) gpa.Config {
+// sqlConfig also returns the connection name it resolved, which the seam
+// reports so a package reading connection-scoped configuration knows which
+// block to read.
+func sqlConfig(connName ...string) (gpa.Config, string) {
 	name := "default"
 	if len(connName) > 0 && connName[0] != "" {
 		name = connName[0]
@@ -186,7 +208,7 @@ func sqlConfig(connName ...string) gpa.Config {
 		}
 	}
 
-	return dbConfig
+	return dbConfig, defaultConnection
 }
 
 // =====================================

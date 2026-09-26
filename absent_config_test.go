@@ -24,7 +24,7 @@ func TestSQLConfigWithoutAnOptionsKey(t *testing.T) {
 		},
 	})
 
-	cfg := sqlConfig()
+	cfg, _ := sqlConfig()
 	if cfg.Driver != "mysql" || cfg.Database != "lemmego" {
 		t.Fatalf("unexpected config: %+v", cfg)
 	}
@@ -40,7 +40,7 @@ func TestSQLConfigWithOnlyTheRequiredKeys(t *testing.T) {
 		"connections": config.M{"pgsql": config.M{"driver": "postgres", "database": "app"}},
 	})
 
-	cfg := sqlConfig()
+	cfg, _ := sqlConfig()
 	if cfg.Driver != "postgres" || cfg.Database != "app" {
 		t.Fatalf("unexpected config: %+v", cfg)
 	}
@@ -54,7 +54,7 @@ func TestSQLConfigTreatsSqlite3AsSqlite(t *testing.T) {
 		"connections": config.M{"sqlite": config.M{"driver": "sqlite3", "database": "./app.db"}},
 	})
 
-	cfg := sqlConfig()
+	cfg, _ := sqlConfig()
 	if cfg.Host != "" || cfg.Port != 0 {
 		t.Errorf("sqlite3 was treated as a networked driver: %+v", cfg)
 	}
