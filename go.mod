@@ -5,7 +5,7 @@ go 1.27
 require (
 	github.com/charmbracelet/huh v1.0.0
 	github.com/go-sql-driver/mysql v1.9.3
-	github.com/lemmego/api v0.1.19
+	github.com/lemmego/api v0.1.34
 	github.com/lemmego/cli v0.1.21
 	github.com/lemmego/fsys v0.1.0
 	github.com/lemmego/gpa v0.1.1
@@ -71,14 +71,13 @@ require (
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
-	github.com/lemmego/migration v0.1.14 // indirect
+	github.com/lemmego/migration v0.1.19 // indirect
 	github.com/lib/pq v1.10.9 // indirect
 	github.com/lucasb-eyer/go-colorful v1.2.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-localereader v0.0.1 // indirect
 	github.com/mattn/go-runewidth v0.0.16 // indirect
-	github.com/mattn/go-sqlite3 v1.14.34 // indirect
 	github.com/mitchellh/hashstructure/v2 v2.0.2 // indirect
 	github.com/muesli/ansi v0.0.0-20230316100256-276c6243b2f6 // indirect
 	github.com/muesli/cancelreader v0.2.2 // indirect
@@ -88,7 +87,7 @@ require (
 	github.com/puzpuzpuz/xsync/v3 v3.5.1 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
-	github.com/romsar/gonertia v1.3.5 // indirect
+	github.com/romsar/gonertia/v3 v3.0.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/tmthrgd/go-hex v0.0.0-20190904060850-447a3041c3bc // indirect
 	github.com/uptrace/bun/extra/bundebug v1.2.18 // indirect
