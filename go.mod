@@ -5,7 +5,7 @@ go 1.27
 require (
 	github.com/charmbracelet/huh v1.0.0
 	github.com/go-sql-driver/mysql v1.9.3
-	github.com/lemmego/api v0.13.0
+	github.com/lemmego/api v0.14.0
 	github.com/lemmego/cli v0.4.1
 	github.com/lemmego/fsys v0.2.0
 	github.com/lemmego/gpa v0.1.3
@@ -44,7 +44,7 @@ require (
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
-	github.com/lemmego/migration v0.2.0 // indirect
+	github.com/lemmego/migration v0.6.0 // indirect
 	github.com/lib/pq v1.10.9 // indirect
 	github.com/lucasb-eyer/go-colorful v1.2.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
