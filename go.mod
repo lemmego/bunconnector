@@ -6,8 +6,8 @@ require (
 	github.com/charmbracelet/huh v1.0.0
 	github.com/go-sql-driver/mysql v1.9.3
 	github.com/lemmego/api v0.14.0
-	github.com/lemmego/cli v0.4.1
-	github.com/lemmego/fsys v0.2.0
+	github.com/lemmego/cli v0.11.1
+	github.com/lemmego/fsys v0.2.1
 	github.com/lemmego/gpa v0.1.3
 	github.com/lemmego/gpabun v0.1.5
 	github.com/spf13/cobra v1.8.1
@@ -44,6 +44,7 @@ require (
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
+	github.com/lemmego/mcp v0.2.0 // indirect
 	github.com/lemmego/migration v0.6.0 // indirect
 	github.com/lib/pq v1.10.9 // indirect
 	github.com/lucasb-eyer/go-colorful v1.2.0 // indirect
@@ -66,8 +67,8 @@ require (
 	github.com/vmihailenco/msgpack/v5 v5.4.1 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 	github.com/xo/terminfo v0.0.0-20220910002029-abceb7e1c41e // indirect
-	go.opentelemetry.io/otel v1.43.0 // indirect
-	go.opentelemetry.io/otel/trace v1.43.0 // indirect
+	go.opentelemetry.io/otel v1.47.0 // indirect
+	go.opentelemetry.io/otel/trace v1.47.0 // indirect
 	golang.org/x/crypto v0.59.0 // indirect
 	golang.org/x/exp v0.0.0-20260218203240-3dfff04db8fa // indirect
 	golang.org/x/mod v0.42.0 // indirect
